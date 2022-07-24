@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link src="/styles.css">
+    <script defer src="/main.js"></script>
+    <title>Students_Panel</title>
+</head>
+
+<body>
+    <div class="container mt-3" style="margin-bottom: 50px;">
+        <form class="needs-validation" novalidate>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="name" class="col-form-label">Имя</label>
+                        <input type="text" id="name" class="form-control validation">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="surname" class="col-form-label">Фамилия</label>
+                        <input type="text" id="surname" class="form-control validation">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="patronymic" class="col-form-label">Отчество</label>
+                        <input type="text" id="patronymic" class="form-control validation">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="birthdate" class="col-form-label">Дата рождения</label>
+                        <input type="date" id="birthdate" class="form-control validation">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-3">
+                        <label for="begin" class="col-form-label">Год начала обучения</label>
+                        <input type="number" id="begin" class="form-control validation">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-3">
+                        <label for="faculty" class="col-form-label">Факультет</label>
+                        <select name="faculty" id="faculty" class="custom-select">
+                            <option selected disabled value="0">Выберите факультет</option>
+                            <option value="1">ИВТ</option>
+                            <option value="2">ПМИ</option>
+                            <option value="3">ФИИТ</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary">Добавить студента</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="container mt-3">
+        <div class="input-group col-5 mb-1">
+            <span class="input-group-text">ФИО</span>
+            <input type="text" class="form-control search">
+        </div>
+        <div class="input-group col-5 mb-1">
+            <span class="input-group-text">Факультет</span>
+            <input type="text" class="form-control search">
+        </div>
+        <div class="input-group col-5 mb-1">
+            <span class="input-group-text">Год начала обучения</span>
+            <input type="text" class="form-control search">
+        </div>
+        <div class="input-group col-5 mb-1">
+            <span class="input-group-text">Год окончания обучения</span>
+            <input type="number" class="form-control search">
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Факультет</th>
+                    <th>Дата рождения</th>
+                    <th>Года обучения</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td>Жуков Константин Сергеевич</td>
+                    <td>ИВТ</td>
+                    <td>27.05.1990 (32 года)</td>
+                    <td>2010-2014 (закончил)</td>
+                </tr>
+                <tr>
+                    <td>Петров Николай Семенович</td>
+                    <td>ФИИТ</td>
+                    <td>16.10.2000 (22 года)</td>
+                    <td>2021-2025 (1 курс)</td>
+                </tr>
+                <tr>
+                    <td>Иванова Анастасия Алексеевна</td>
+                    <td>ПМИ</td>
+                    <td>08.03.1998 (24 года)</td>
+                    <td>2020-2024 (2 курс)</td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
