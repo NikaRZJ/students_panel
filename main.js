@@ -1,14 +1,20 @@
 (() => {
     function getData() {
         let student = {};
-        student["name"] = document.getElementById('name').value;
-        student["surname"] = document.getElementById('surname').value;
-        student["patronymic"] = document.getElementById('patronymic').value;
+        student["name"] = firstCharUp(document.getElementById('name').value);
+        student["surname"] = firstCharUp(document.getElementById('surname').value);
+        student["patronymic"] = firstCharUp(document.getElementById('patronymic').value);
         student["birthdate"] = document.getElementById('birthdate').value;
         student["begin"] = document.getElementById('begin').value;
         let fac = document.getElementById('faculty');
         student["faculty"] = fac.options[fac.selectedIndex].textContent;
         return student;
+    }
+
+    function firstCharUp(word) {
+        word.toLowerCase();
+        let res = word.toUpperCase();
+        return res[0] + word.slice(1);
     }
 
     function addItem(student) {
@@ -23,20 +29,34 @@
         tdBirth.textContent = student.birthdate.split('-').reverse().join('.') + ' (';
         if (getAge(student.birthdate) % 10 === 1) {
             tdBirth.textContent += getAge(student.birthdate) + ' год)';
+        } else if (getAge(student.birthdate) % 10 === 0) {
+            tdBirth.textContent += getAge(student.birthdate) + ' лет)';
         } else if (getAge(student.birthdate) % 10 < 5) {
             tdBirth.textContent += getAge(student.birthdate) + ' года)';
-        } else {
+        } else
             tdBirth.textContent += getAge(student.birthdate) + ' лет)';
-        }
-        // tdBirth.textContent = student.date[2] + '.' + student.date[1] + '.' + student.date[0] + ' (' + student.currentAge + ' лет' + ')';
-        // (student.done === true) ? tdBegin.innerHTML = student.year + '-' + student.endDate + ' (закончил)' : tdBegin.innerHTML = student.year + '-' + student.endDate + ' (' + student.course + ' курс)';
+        tdBegin.textContent = student.begin + '-' + Number(Number(student.begin) + Number(4)) + ' (' + getCourse(student.begin);
 
         tr.append(tdFio);
         tr.append(tdFac);
         tr.append(tdBirth);
-        // tr.append(tdBegin);
+        tr.append(tdBegin);
         tbody.append(tr);
         return tbody;
+    }
+
+    function getCourse(year) {
+        const now = new Date();
+        const month = now.getMonth() + 1;
+        const nowYear = now.getFullYear();
+        if (nowYear >= Number(year) + 4) {
+            return 'закончил)';
+        } else {
+            let course = nowYear - year;
+            if (month > 6)
+                course++;
+            return course + ' курс)';
+        }
     }
 
     function toggleValid(input, p) {
@@ -93,7 +113,6 @@
     }
 
     function validSelect(fac) {
-        console.log(fac.value);
         if (fac.value != 0) {
             toggleValid(fac, 1)
             return 1;
@@ -108,18 +127,52 @@
         const now = new Date();
         const birthArr = birthdate.split('-');
         const birth = new Date(birthArr[0], birthArr[1] - 1, birthArr[2]);
-        console.log(birthdate);
-        console.log(Math.floor((now - birth) / 31557600000));
         return Math.floor((now - birth) / 31557600000); //1000*60*60*24*365.25 milliseconds
+    }
+
+    function createArr() {
+        let arr = [];
+        let student = {};
+        const now = new Date();
+        student.name = "Валерий";
+        student.surname = "Жмышенко";
+        student.patronymic = "Альбертович";
+        student.birthdate = now.getFullYear() - 54 + '-' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        student.begin = now.getFullYear() - 54 + 18;
+        student.faculty = "ИВТ";
+        arr.push(student);
+        student = {};
+        student.name = "Богдан";
+        student.surname = "Жмышенко";
+        student.patronymic = "Денисович";
+        student.birthdate = now.getFullYear() - 18 + '-' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        student.begin = now.getFullYear();
+        student.faculty = "ФИИТ";
+        arr.push(student);
+        student = {};
+        student.name = "Денис";
+        student.surname = "Сухачев";
+        student.patronymic = "Валерьевич";
+        student.birthdate = now.getFullYear() - 27 + '-' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        student.begin = now.getFullYear() - 2;
+        student.faculty = "ПМИ";
+        arr.push(student);
+        return arr;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         let form = document.querySelector('form');
         let inputs = document.querySelectorAll('.validation');
         let fac = document.getElementById('faculty');
+        let arrStudents = createArr();
+
+        arrStudents.forEach(student => {
+            document.querySelector('table').append(addItem(student));
+        });
+
         inputs.forEach(input => {
             input.addEventListener('input', () => valid(input))
-        })
+        });
 
         fac.addEventListener('input', () => validSelect(fac));
         form.addEventListener('submit', (event) => {
@@ -134,16 +187,16 @@
                     isValidate++;
                 }
             })
-            if (isValidate === inputs.length && validSelect(fac)) {
-                const student = getData();
-                document.querySelector('table').append(addItem(student));
-                inputs.forEach(input => {
-                    input.value = '';
-                    input.classList.remove('is-valid');
-                });
-                fac.value = 0;
-                fac.classList.remove('is-valid');
-            }
+            // if (isValidate === inputs.length && validSelect(fac)) {
+            const student = getData();
+            document.querySelector('table').append(addItem(student));
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('is-valid');
+            });
+            fac.value = 0;
+            fac.classList.remove('is-valid');
+            //}
         });
     });
 })();
