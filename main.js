@@ -18,7 +18,7 @@
     }
 
     function addItem(student) {
-        const tbody = document.createElement('tbody');
+        const tbody = document.querySelector('tbody');
         const tr = document.createElement('tr');
         const tdFio = document.createElement('td');
         const tdFac = document.createElement('td');
@@ -185,6 +185,52 @@
         }
     }
 
+    function addSortTable(table) {
+        const th = document.querySelectorAll('th');
+        // Направление сортировки
+        const directions = Array.from(th).map(function (header) {
+            return '';
+        });
+
+        for (let i = 0; i < th.length; i++) {
+            th[i].style.cursor = "pointer";
+            th[i].addEventListener('click', () => {
+                sortTable(table, i, directions);
+            })
+        }
+    }
+
+    function sortTable(table, index, directions) {
+        const tableBody = table.querySelector('tbody');
+        const rows = tableBody.querySelectorAll('tr');
+        const newRows = Array.from(rows);
+        // Получить текущее направление
+        const direction = directions[index] || 'asc';
+
+        // Фактор по направлению
+        const multiplier = (direction === 'asc') ? 1 : -1;
+        newRows.sort(function (rowA, rowB) {
+            const cellA = rowA.querySelectorAll('td')[index].innerHTML;
+            const cellB = rowB.querySelectorAll('td')[index].innerHTML;
+
+            switch (true) {
+                case cellA > cellB: return 1 * multiplier;
+                case cellA < cellB: return -1 * multiplier;
+                case cellA === cellB: return 0;
+            }
+        });
+        [].forEach.call(rows, function (row) {
+            tableBody.removeChild(row);
+        });
+
+        // Поменять направление
+        directions[index] = direction === 'asc' ? 'desc' : 'asc';
+
+        newRows.forEach(function (newRow) {
+            tableBody.appendChild(newRow);
+        })
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.querySelector('form');
         const inputs = document.querySelectorAll('.validation');
@@ -200,6 +246,8 @@
         inputs.forEach(input => {
             input.addEventListener('input', () => valid(input))
         });
+
+        addSortTable(table);
 
         for (let i = 0; i < searchInputs.length; i++) {
             searchInputs[i].addEventListener('input', () => {
