@@ -160,11 +160,38 @@
         return arr;
     }
 
+    function tableSearch(input, table, cell, end) {
+        const val = new RegExp(input.value, 'i');
+        if (val != '') {
+            for (let i = 1; i < table.rows.length; i++) {
+                (table.rows[i].cells[cell].innerText.search(val) == -1) ? table.rows[i].style.display = "none" : table.rows[i].style.display = "";
+
+                if (cell === 3) {
+
+                    const first = table.rows[i].cells[3].innerText.substr(0, 4);
+                    const second = table.rows[i].cells[3].innerText.substr(5, 5);
+                    console.log(first, second);
+                    if (end === false) { //год начала обучения
+                        (first.search(val) == -1) ? table.rows[i].style.display = "none" : table.rows[i].style.display = "";
+                    } else if (end === true) { //год окончания обучения
+                        (second.search(val) == -1) ? table.rows[i].style.display = "none" : table.rows[i].style.display = "";
+                    }
+                }
+            }
+        } else {
+            for (let i = 1; i < table.rows.length; i++) {
+                table.rows[i].style.display = "";
+            }
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        let form = document.querySelector('form');
-        let inputs = document.querySelectorAll('.validation');
-        let fac = document.getElementById('faculty');
+        const form = document.querySelector('form');
+        const inputs = document.querySelectorAll('.validation');
+        const fac = document.getElementById('faculty');
         let arrStudents = createArr();
+        const searchInputs = document.querySelectorAll(".search");
+        const table = document.querySelector('table');
 
         arrStudents.forEach(student => {
             document.querySelector('table').append(addItem(student));
@@ -174,7 +201,23 @@
             input.addEventListener('input', () => valid(input))
         });
 
-        fac.addEventListener('input', () => validSelect(fac));
+        for (let i = 0; i < searchInputs.length; i++) {
+            searchInputs[i].addEventListener('input', () => {
+                if (i < 2)
+                    tableSearch(searchInputs[i], table, i);
+                else {
+                    switch (i) {
+                        case 2:
+                            tableSearch(searchInputs[i], table, 3, false);
+                            break;
+                        case 3:
+                            tableSearch(searchInputs[i], table, 3, true);
+                            break;
+                    }
+                }
+            });
+        }
+
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             let isValidate = 0;
@@ -186,17 +229,20 @@
                 if (input.classList.contains('is-valid')) {
                     isValidate++;
                 }
-            })
-            // if (isValidate === inputs.length && validSelect(fac)) {
-            const student = getData();
-            document.querySelector('table').append(addItem(student));
-            inputs.forEach(input => {
-                input.value = '';
-                input.classList.remove('is-valid');
             });
-            fac.value = 0;
-            fac.classList.remove('is-valid');
-            //}
+
+            validSelect(fac);
+            if (isValidate === inputs.length && validSelect(fac)) {
+                const student = getData();
+                document.querySelector('table').append(addItem(student));
+                arrStudents.push(student);
+                inputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('is-valid');
+                });
+                fac.value = 0;
+                fac.classList.remove('is-valid');
+            }
         });
     });
 })();
