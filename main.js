@@ -137,7 +137,11 @@
         student.name = "Валерий";
         student.surname = "Жмышенко";
         student.patronymic = "Альбертович";
-        student.birthdate = now.getFullYear() - 54 + '-' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        student.birthdate = now.getFullYear() - 54 + '-';
+        if (Number(Number(now.getMonth()) + 1) < 10)
+            student.birthdate += '0' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        else
+            student.birthdate += '0' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
         student.begin = now.getFullYear() - 54 + 18;
         student.faculty = "ИВТ";
         arr.push(student);
@@ -145,7 +149,11 @@
         student.name = "Богдан";
         student.surname = "Жмышенко";
         student.patronymic = "Денисович";
-        student.birthdate = now.getFullYear() - 18 + '-' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        student.birthdate = now.getFullYear() - 18 + '-';
+        if (Number(Number(now.getMonth()) + 1) < 10)
+            student.birthdate += '0' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        else
+            student.birthdate += '0' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
         student.begin = now.getFullYear();
         student.faculty = "ФИИТ";
         arr.push(student);
@@ -153,7 +161,12 @@
         student.name = "Денис";
         student.surname = "Сухачев";
         student.patronymic = "Валерьевич";
-        student.birthdate = now.getFullYear() - 27 + '-' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        student.birthdate = now.getFullYear() - 27 + '-';
+        if (Number(Number(now.getMonth()) + 1) < 10)
+            student.birthdate += '0' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+        else
+            student.birthdate += '0' + Number(Number(now.getMonth()) + 1) + '-' + now.getDate();
+
         student.begin = now.getFullYear() - 2;
         student.faculty = "ПМИ";
         arr.push(student);
